@@ -1,0 +1,19 @@
+---
+# NFS client role configuration
+#
+
+# list of package to install
+nfs_client__packages_name:
+  - nfs-utils
+  - nfs4-acl-tools
+
+# The target state for all packages
+nfs_client__package_state: latest
+
+# List of service to check for status
+nfs_client__service_names: []
+nfs_client__service_state: running
+nfs_client__service_enabled: true
+
+# List of mount point to register into /etc/fstab
+nfs_client__mounts: []
