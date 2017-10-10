@@ -1,33 +1,22 @@
 ---
+# tasks file for nfs-client
+
 - name: Include the OS specific variables
-  include_vars: "{{ ansible_os_family }}.yml"
-  tags: ['nfs-client']
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        - "defaults.yml"
+      skip: true
+  tags: ['always']
 
-- name: Install required packages
-  package:
-    name: '{{ item }}'
-    state: '{{ nfs_client__package_state }}'
-  with_items:
-    '{{ nfs_client__packages_name }}'
-  tags: ['nfs-client']
+- import_tasks: install.yml
+  tags: ['nfs-client', 'nfs-client-install']
 
-# dump and passno provided as strings due to: https://github.com/ansible/ansible-modules-core/issues/1868
-- name: Ensure mounts are registered
-  mount:
-    dump: '{{ item.dump | default(0) | string }}'
-    passno: '{{ item.passno | default(0) | string }}'
-    fstype: '{{ item.fstype | default("nfs") | string }}'
-    name: '{{ item.name }}'
-    opts: '{{ item.options | default(omit) }}'
-    src: '{{ item.src }}'
-    state: '{{ item.state | default("mounted") }}'
-  with_items: '{{ nfs_client__mounts }}'
-  tags: ['nfs-client']
+- import_tasks: configure.yml
+  tags: ['nfs-client', 'nfs-client-configure']
 
-- name: Ensure service are running
-  service:
-    name: '{{ item }}'
-    state: '{{ nfs_client__service_state }}'
-    enabled: '{{ nfs_client__service_enabled }}'
-  with_items: '{{ nfs_client__service_names }}'
-  tags: ['nfs-client']
+- import_tasks: service.yml
+  tags: ['nfs-client', 'nfs-client-service']

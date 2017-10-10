@@ -1,0 +1,13 @@
+---
+
+# dump and passno provided as strings due to: https://github.com/ansible/ansible-modules-core/issues/1868
+- name: Ensure mounts are registered
+  mount:
+    dump: '{{ item.dump|default(0)|string }}'
+    passno: '{{ item.passno|default(0)|string }}'
+    fstype: '{{ item.fstype|default("nfs")|string }}'
+    name: '{{ item.name }}'
+    opts: '{{ item.options|default(omit) }}'
+    src: '{{ item.src }}'
+    state: '{{ item.state|default("mounted") }}'
+  with_items: '{{ nfs_client__mounts }}'
