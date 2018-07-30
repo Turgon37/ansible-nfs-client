@@ -1,0 +1,4 @@
+---
+
+nfs_client__packages_names:
+  - nfs-common

@@ -1,4 +1,8 @@
 ---
 
+nfs_client__packages_names:
+  - nfs-utils
+  - nfs4-acl-tools
+
 nfs_client__service_names:
   - rpcbind
