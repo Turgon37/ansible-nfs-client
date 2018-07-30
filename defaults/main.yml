@@ -1,13 +1,28 @@
 ---
 # defaults file for nfs-client
 
+# Choose the monitoring backend to configure (if available)
+# nfs_client__monitoring:
+
+
+### INSTALLATION CONFIGURATION
+# ---------------------------------------
 # list of package to install
-nfs_client__packages_name:
+nfs_client__packages_names:
   - nfs-utils
   - nfs4-acl-tools
 
+
+### SERVICE CONFIGURATION
+# ---------------------------------------
 # List of service to check for status
 nfs_client__service_names: []
 
+# Determine if the service will be enabled
+nfs_client__service_enabled: true
+
+
+### NFS CONFIGURATION
+# ---------------------------------------
 # List of mount point to register into /etc/fstab
 nfs_client__mounts: []

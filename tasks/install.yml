@@ -4,4 +4,4 @@
   package:
     name: '{{ item }}'
     state: present
-  with_items: '{{ nfs_client__packages_name }}'
+  with_items: '{{ nfs_client__packages_names|list }}'
