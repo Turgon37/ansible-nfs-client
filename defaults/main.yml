@@ -8,9 +8,7 @@
 ### INSTALLATION CONFIGURATION
 # ---------------------------------------
 # list of package to install
-nfs_client__packages_names:
-  - nfs-utils
-  - nfs4-acl-tools
+nfs_client__packages_names: []
 
 
 ### SERVICE CONFIGURATION
